@@ -64,6 +64,7 @@ type Builder struct {
 	orderBy    string
 	groupBy    string
 	having     string
+	Error      bool
 }
 
 // Dialect sets the db dialect of Builder.
@@ -199,6 +200,13 @@ func (b *Builder) Limit(limitN int, offset ...int) *Builder {
 	return b
 }
 
+// Remove Limit
+func (b *Builder) RemoveLimitAndOffset() *Builder {
+	b.limitation = nil
+
+	return b
+}
+
 // InnerJoin sets inner join
 func (b *Builder) InnerJoin(joinTable string, joinCond interface{}) *Builder {
 	return b.Join("INNER", joinTable, joinCond)
@@ -231,6 +239,10 @@ func (b *Builder) Select(cols ...string) *Builder {
 		b.optype = selectType
 	}
 	return b
+}
+
+func (b *Builder) GetSelectData() []string {
+	return b.selects
 }
 
 // And sets AND condition
@@ -303,7 +315,9 @@ func (b *Builder) Insert(eq ...interface{}) *Builder {
 
 // Update sets update SQL
 func (b *Builder) Update(updates ...Eq) *Builder {
-	b.updates = make([]Eq, 0, len(updates))
+	if(len(b.updates) == 0){
+		b.updates = make([]Eq, 0, len(updates))
+	}
 	for _, update := range updates {
 		if update.IsValid() {
 			b.updates = append(b.updates, update)
@@ -311,6 +325,10 @@ func (b *Builder) Update(updates ...Eq) *Builder {
 	}
 	b.optype = updateType
 	return b
+}
+
+func (b *Builder) GetUpdateCols() []Eq  {
+	return b.updates
 }
 
 // Delete sets delete SQL

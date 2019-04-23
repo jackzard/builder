@@ -8,6 +8,7 @@ import (
 	sql2 "database/sql"
 	"fmt"
 	"reflect"
+	"strings"
 	"time"
 )
 
@@ -114,7 +115,8 @@ func ConvertToBoundSQL(sql string, args []interface{}) (string, error) {
 			if noSQLQuoteNeeded(arg) {
 				_, err = fmt.Fprint(&buf, arg)
 			} else {
-				_, err = fmt.Fprintf(&buf, "'%v'", arg)
+				_, err = fmt.Fprintf(&buf, "'%v'", strings.Replace(fmt.Sprintf("%v", arg), "'",
+					"''", -1))
 			}
 			if err != nil {
 				return "", err

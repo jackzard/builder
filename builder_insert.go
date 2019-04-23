@@ -15,6 +15,10 @@ func Insert(eq ...interface{}) *Builder {
 	return builder.Insert(eq...)
 }
 
+func (b *Builder) GetInsertCols() []string {
+	return b.insertCols
+}
+
 func (b *Builder) insertSelectWriteTo(w Writer) error {
 	if _, err := fmt.Fprintf(w, "INSERT INTO %s ", b.into); err != nil {
 		return err
