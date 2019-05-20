@@ -20,7 +20,7 @@ func (b *Builder) limitWriteTo(w Writer) error {
 			return ErrInvalidLimitation
 		}
 		// erase limit condition
-		b.limitation = nil
+		//b.limitation = nil
 		ow := w.(*BytesWriter)
 
 		switch strings.ToLower(strings.TrimSpace(b.dialect)) {
