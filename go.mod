@@ -1,4 +1,4 @@
-module github.com/jackzard/builder
+module github.com/jackzard/xorm-builder
 
 require (
 	github.com/go-xorm/sqlfiddle v0.0.0-20180821085327-62ce714f951a
