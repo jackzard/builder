@@ -132,6 +132,12 @@ func (b *Builder) OrderBy(orderBy string) *Builder {
 	return b
 }
 
+// Remove OrderBy
+func (b *Builder) RemoveOrderBy() *Builder {
+	b.orderBy = ""
+	return b
+}
+
 // GroupBy groupby SQL
 func (b *Builder) GroupBy(groupby string) *Builder {
 	b.groupBy = groupby
