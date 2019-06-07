@@ -13,7 +13,7 @@ var _ Cond = Like{"", ""}
 
 // WriteTo write SQL to Writer
 func (like Like) WriteTo(w Writer) error {
-	if _, err := fmt.Fprintf(w, "%s LIKE ?", like[0]); err != nil {
+	if _, err := fmt.Fprintf(w, "%s ILIKE ?", like[0]); err != nil {
 		return err
 	}
 	// FIXME: if use other regular express, this will be failed. but for compatible, keep this
